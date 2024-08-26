@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import data from "./data";
+import List from "./List";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const [people, setPeople] = useState(data);
+
+
+  // refresh to set people state back to data
+  if (people.length === 0) {
+    return <main>
+      <button className="btn" onClick={() => setPeople(data)}>Refresh</button>
+    </main>;
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <main>
+      <section className="container">
+        <h3>{people.length} birthdays today.</h3>
+        {/* pass down data as prop to component */}
+        <List people={people} />
 
-export default App
+        {/* clear list */}
+        <button type="button" className="btn btn-block" onClick={() => setPeople([])}>
+          Clear All
+        </button>
+      </section>
+    </main>
+  );
+};
+
+export default App;
